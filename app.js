@@ -81,12 +81,14 @@ function checkHorizontalTiles() {
         for (let j = 0; j < board[i].length; ++j) {
             if (board[i][j].style.backgroundColor == 'rgb(230, 103, 107)') {
                 redTileCount++
+                checkTileList[i][j] = 1
                 if (redTileCount == 3) {
                     alert('Player 1 wins!')
                     resetGame()
                 }
             } else if (board[i][j].style.backgroundColor == 'lightgray') {
                 grayTileCount++
+                checkTileList[i][j] = 2
                 if (grayTileCount == 3) {
                     alert('Player 2 wins!')
                     resetGame()
@@ -179,6 +181,9 @@ function resetGame() {
         }
     }
     pl1.style.backgroundColor = 'rgb(5, 146, 0)'
+    console.log(checkTileList)
+    checkTileList = [...Array(3)].map(x => Array(3).fill(0))
+    console.log(checkTileList)
     playerMove = true
 }
 //--------------------------------------------------------------------

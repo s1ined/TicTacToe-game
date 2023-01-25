@@ -20,10 +20,23 @@ socket.onopen = (event) => {
 }
 
 socket.onmessage = (event) => {
-  console.log(`Data received from server: ${event.data}`)
-  receivedMessageObj = JSON.parse(event.data)
-  console.log(`${receivedMessageObj.username} [message] ${receivedMessageObj.message}`)
-  receivedMessage()
+  if (JSON.parse(event.data) instanceof Array) {
+    let tileArray = JSON.parse(event.data)
+    for (let i = 0; i < tileArray.length; ++i) {
+      for (let j = 0; j < tileArray[i].length; ++j) {
+        if (tileArray[i][j] == 1 && board[i][j].style.backgroundColor != 'rgb(230, 103, 107)') {
+          board[i][j].style.backgroundColor = 'rgb(230, 103, 107)'
+        } else if (tileArray[i][j] == 2 && board[i][j].style.backgroundColor != 'lightgray') {
+          board[i][j].style.backgroundColor = 'lightgray'
+        }
+      }
+    }
+  } else {
+    console.log(`Data received from server: ${event.data}`)
+    receivedMessageObj = JSON.parse(event.data)
+    console.log(`${receivedMessageObj.username} [message] ${receivedMessageObj.message}`)
+    receivedMessage()
+  }
 }
 
 socket.onclose = function (event) {

@@ -6,13 +6,23 @@ server.on('connection', (ws) => {
     console.log(`Connected clients: ${server.clients.size}`)
 
     ws.on('message', (rawMessage) => {
-        server.clients.forEach(function each(client) {
-            if (client == ws && client.readyState == ws.OPEN) {
-                client.send(rawMessage.toString())
-                let obj = JSON.parse(rawMessage)
-                console.log(`${obj.username} sends ${obj.message}`)
-            }
-        })
+        if (JSON.parse(rawMessage) instanceof Array) {
+            server.clients.forEach(function each(client) {
+                if (client != ws && client.readyState == ws.OPEN) {
+                    client.send(rawMessage.toString())
+                    console.log(rawMessage.toString())
+                }
+            })
+        }
+        else {
+            server.clients.forEach(function each(client) {
+                if (client != ws && client.readyState == ws.OPEN) {
+                    client.send(rawMessage.toString())
+                    let obj = JSON.parse(rawMessage)
+                    console.log(`${obj.username} sends ${obj.message}`)
+                }
+            })
+        }
     })
 })
 

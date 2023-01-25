@@ -10,12 +10,20 @@ let playerObj = {
   message: 'undefined'
 }
 
+let receivedMessageObj = {
+  username: 'Anonymous',
+  message: 'undefined'
+}
+
 socket.onopen = (event) => {
   console.log('Connection to the server has been established.')
 }
 
 socket.onmessage = (event) => {
   console.log(`Data received from server: ${event.data}`)
+  receivedMessageObj = JSON.parse(event.data)
+  console.log(`${receivedMessageObj.username} [message] ${receivedMessageObj.message}`)
+  receivedMessage()
 }
 
 socket.onclose = function (event) {
@@ -35,7 +43,8 @@ socket.onerror = function (error) {
 sendBtn.addEventListener('click', () => {
 
   if (inputText.value != '' && inputName.value != '') {
-    createMessage()
+    playerObj.username = inputName.value
+    playerObj.message = inputText.value
     socket.send(JSON.stringify(playerObj))
   } else {
     createErrorMessage('Please enter a name and/or message text.')
@@ -64,9 +73,33 @@ function createMessage() {
   p2.append(h62)
   outgoingMessage.append(p1)
   outgoingMessage.append(p2)
-  msgContainer.append(outgoingMessage)
+  //msgContainer.append(outgoingMessage)
 
   playerObj.message = inputText.value
+}
+
+function receivedMessage() {
+  const outgoingMessage = document.createElement('div')
+  outgoingMessage.classList.add('container')
+  outgoingMessage.classList.add('pt-1')
+  outgoingMessage.classList.add('pb-1')
+  outgoingMessage.classList.add('outgoing-message')
+  outgoingMessage.style.backgroundColor = 'darkcyan'
+  outgoingMessage.style.borderRadius = '10px'
+  outgoingMessage.style.fontSize = '14px'
+  outgoingMessage.style.color = 'lightskyblue'
+  outgoingMessage.style.marginTop = '5px'
+  let p1 = document.createElement('p')
+  let p2 = document.createElement('p')
+  let h61 = document.createElement('h6')
+  let h62 = document.createElement('h6')
+  h61.innerHTML = receivedMessageObj.username
+  p1.append(h61)
+  h62.innerHTML = receivedMessageObj.message
+  p2.append(h62)
+  outgoingMessage.append(p1)
+  outgoingMessage.append(p2)
+  msgContainer.append(outgoingMessage)
 }
 
 function createErrorMessage(message) {

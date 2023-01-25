@@ -64,6 +64,13 @@ function markTiles(i, j) {
 }
 
 function checkTiles() {
+    checkHorizontalTiles()
+    checkVerticalTiles()
+    checkLeftDiagonal()
+    checkRightDiagonal()
+}
+
+function checkHorizontalTiles() {
     let redTileCount = 0
     let grayTileCount = 0
 
@@ -87,6 +94,12 @@ function checkTiles() {
             }
         }
     }
+}
+
+function checkVerticalTiles() {
+    let redTileCount = 0
+    let grayTileCount = 0
+
     // Проверяем вертикали
     for (let j = 0; j < board.length; ++j) {
         redTileCount = 0
@@ -109,15 +122,65 @@ function checkTiles() {
     }
 }
 
-    function resetGame() {
-        for (let i = 0; i < board.length; ++i) {
-            for (let j = 0; j < board[i].length; ++j) {
-                board[i][j].style.backgroundColor = ''
+function checkLeftDiagonal() {
+    let redTileCount = 0
+    let grayTileCount = 0
+
+    for (let i = 0; i < board.length; ++i) {
+        for (let j = 0; j < board[i].length; ++j) {
+            if (i == j && board[i][j].style.backgroundColor == 'rgb(230, 103, 107)') {
+                redTileCount++
+                if (redTileCount == 3) {
+                    alert('Player 1 wins!')
+                    redTileCount = 0
+                    resetGame()
+                }
+            } else if (i == j && board[i][j].style.backgroundColor == 'lightgray') {
+                grayTileCount++
+                if (grayTileCount == 3) {
+                    alert('Player 2 wins!')
+                    grayTileCount = 0
+                    resetGame()
+                }
             }
         }
-        pl1.style.backgroundColor = 'rgb(5, 146, 0)'
-        playerMove = true
     }
+}
+
+function checkRightDiagonal() {
+    let redTileCount = 0
+    let grayTileCount = 0
+
+    for (let i = 0; i < board.length; ++i) {
+        for (let j = 0; j < board[i].length; ++j) {
+            if ((i + j) < board.length && board[i][j].style.backgroundColor == 'rgb(230, 103, 107)') {
+                redTileCount++
+                if (redTileCount == 3) {
+                    alert('Player 1 wins!')
+                    redTileCount = 0
+                    resetGame()
+                }
+            } else if ((i + j) < board.length && board[i][j].style.backgroundColor == 'lightgray') {
+                grayTileCount++
+                if (grayTileCount == 3) {
+                    alert('Player 2 wins!')
+                    grayTileCount = 0
+                    resetGame()
+                }
+            }
+        }
+    }
+}
+
+function resetGame() {
+    for (let i = 0; i < board.length; ++i) {
+        for (let j = 0; j < board[i].length; ++j) {
+            board[i][j].style.backgroundColor = ''
+        }
+    }
+    pl1.style.backgroundColor = 'rgb(5, 146, 0)'
+    playerMove = true
+}
 //--------------------------------------------------------------------
 
 // Игровой цикл

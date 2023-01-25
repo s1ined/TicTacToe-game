@@ -1,7 +1,5 @@
 'use strict'
 
-//window.requestAnimationFrame(gameLoop)
-
 let playerMove = true
 let pl1 = document.querySelector('.player1')
 let pl2 = document.querySelector('.player2')
@@ -125,6 +123,7 @@ function checkVerticalTiles() {
             }
         }
     }
+    socket.send(JSON.stringify(checkTileList))
 }
 
 function checkLeftDiagonal() {
@@ -152,6 +151,7 @@ function checkLeftDiagonal() {
             }
         }
     }
+    socket.send(JSON.stringify(checkTileList))
 }
 
 function checkRightDiagonal() {
@@ -179,6 +179,7 @@ function checkRightDiagonal() {
             }
         }
     }
+    socket.send(JSON.stringify(checkTileList))
 }
 
 function resetGame() {
@@ -191,13 +192,3 @@ function resetGame() {
     checkTileList = [...Array(3)].map(x => Array(3).fill(0))
     playerMove = true
 }
-//--------------------------------------------------------------------
-
-// Игровой цикл
-// function gameLoop() {
-//     gameLogic()
-
-//     window.requestAnimationFrame(gameLoop)
-// }
-
-// ===========================================================================

@@ -96,6 +96,7 @@ function checkHorizontalTiles() {
             }
         }
     }
+    socket.send(JSON.stringify(checkTileList))
 }
 
 function checkVerticalTiles() {
@@ -187,9 +188,7 @@ function resetGame() {
         }
     }
     pl1.style.backgroundColor = 'rgb(5, 146, 0)'
-    console.log(checkTileList)
     checkTileList = [...Array(3)].map(x => Array(3).fill(0))
-    console.log(checkTileList)
     playerMove = true
 }
 //--------------------------------------------------------------------

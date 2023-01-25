@@ -109,12 +109,14 @@ function checkVerticalTiles() {
         for (let i = 0; i < board[j].length; ++i) {
             if (board[i][j].style.backgroundColor == 'rgb(230, 103, 107)') {
                 redTileCount++
+                checkTileList[i][j] = 1
                 if (redTileCount == 3) {
                     alert('Player 1 wins!')
                     resetGame()
                 }
             } else if (board[i][j].style.backgroundColor == 'lightgray') {
                 grayTileCount++
+                checkTileList[i][j] = 2
                 if (grayTileCount == 3) {
                     alert('Player 2 wins!')
                     resetGame()
@@ -132,6 +134,7 @@ function checkLeftDiagonal() {
         for (let j = 0; j < board[i].length; ++j) {
             if (i == j && board[i][j].style.backgroundColor == 'rgb(230, 103, 107)') {
                 redTileCount++
+                checkTileList[i][j] = 1
                 if (redTileCount == 3) {
                     alert('Player 1 wins!')
                     redTileCount = 0
@@ -139,6 +142,7 @@ function checkLeftDiagonal() {
                 }
             } else if (i == j && board[i][j].style.backgroundColor == 'lightgray') {
                 grayTileCount++
+                checkTileList[i][j] = 2
                 if (grayTileCount == 3) {
                     alert('Player 2 wins!')
                     grayTileCount = 0
@@ -157,6 +161,7 @@ function checkRightDiagonal() {
         for (let j = 0; j < board[i].length; ++j) {
             if ((i + j) < board.length && board[i][j].style.backgroundColor == 'rgb(230, 103, 107)') {
                 redTileCount++
+                checkTileList[i][j] = 1
                 if (redTileCount == 3) {
                     alert('Player 1 wins!')
                     redTileCount = 0
@@ -164,6 +169,7 @@ function checkRightDiagonal() {
                 }
             } else if ((i + j) < board.length && board[i][j].style.backgroundColor == 'lightgray') {
                 grayTileCount++
+                checkTileList[i][j] = 2
                 if (grayTileCount == 3) {
                     alert('Player 2 wins!')
                     grayTileCount = 0
